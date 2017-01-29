@@ -1,0 +1,26 @@
+#### COMANDOS UTILES DE POSTGRESQL ####
+
+(postgres@env)
+
+psql -> Abre la consola de psql. Opcional, db,user,pwd. 
+createuser -> Crear usuario
+createdb   -> Crear db
+dropuser   -> Elimina un role
+dropdb  -> Elimina una db
+
+
+
+
+(psql)
+
+\q  -> Para salir de la shell.
+\conninfo -> Me entrega info de la db y usuario que estoy usando.
+\d   -> Show relations, tablas.
+\l	-> Lista de las db
+
+
+(Notas)
+
+
+Aca el autoincrement type es el serial.
+

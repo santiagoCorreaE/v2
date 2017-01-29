@@ -1,0 +1,208 @@
+###################################################################
+###############   INSTALACION DJANGO ##############################
+###################################################################
+
+1. cmd: Actualiza las librerias de virtualenv de python.
+
+pip install --upgrade virtualenv
+
+2. cmd: Crea el entorno virtual de programacion.
+
+virtualenv -p python3 envname
+
+3. cmd: Activa el entorno virtual
+
+source envname/bin/activate
+
+4. (env): Actualiza las librerias de pip
+
+pip install --upgrade pip
+
+5. (env):Instala los archivos requeridos para que funcione django version x.xx.x
+
+pip install django~=1.10.0
+
+6. (env):Crea un proyecto de nombre "name" en la carpeta "."
+
+django-admin startproject name .
+
+7. Se puede cambiar la zona horario en el archivo settings.py.
+
+TIME_ZONE = 'America/Bogota'
+
+8. Agregar un path para la localizacion de los archivos estaticos del proyecto. Esto se hace al final del archivo  "settings.py"", debajo de la linea.
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+9. Editar HOSTs de entrada para aplicar segun necesidad, en "settings.py":
+
+ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com']
+
+
+
+###################################################################
+###############       DB  SETTINGS       ##########################
+###################################################################
+####### (ENGINE = postgresql) ###### (ADAPTER = psycopg2) #########
+
+
+1. (env) : Instalar el servidor de base de datos en el pc. Esto genera un usuario postgres para acceder a comandos de psql.
+
+sudo apt-get install postgresql postgresql-contrib
+
+2. (postgres@env): Crea un usuario nuevo(Role) con contraseña -e Echo --pwprompt psw -i interactive
+
+createuser -e --pwprompt -i username
+
+3.(postgres@env): Crea una db. Lo ideal es que la db tenga el mismo nombre del role asignado.
+
+createdb dbname
+
+4. Editar el archivo mysite/settings.py en la seccion para la base de datos que quede de la siguiente forma:
+
+DATABASES = {
+    'default': {
+        'ENGINE' : 'django.db.backends.postgresql_psycopg2',
+        'NAME' : 'dbname',
+        'USER' : 'username',
+        'PASSWORD' : 'PasswordDeDB',
+        'HOST' : 'localhost',
+        'PORT' : '',
+    }
+}
+
+"""
+ENGINE es el adappter de pase de datos.
+NAME : Nombre de la base de datos.
+USER : Usuario de db.
+PASSWORD : PSD db.
+HOST : localhost para localhost.
+PORT : blank.
+"""
+
+###Instalacion adappter psycopg2
+Algunas veces no queda bien, probar con 5. ó 6.+7. para la instalacion despues de un update de repos.
+
+5.(env): Instala el adappter de psycopg2
+
+sudo apt-get install python-psycopg2
+
+6.(env): Instala el adapter de psycopg2
+
+sudo apt-get build-dep python-psycopg2
+
+7.(env): Instala el adapter de psycopg2
+
+pip install psycopg2
+
+############Prueba funcionamiento##################
+
+8.(venv): Entra en la consola de python
+
+python manage.py shell
+
+9.(python): Test db conection. Si no devuelve nada, la db funciono bien.
+
+>>> from django.db import connection
+>>> cursor = connection.cursor()
+
+10.(venv): Hace las migraciones necesarias para inicializar las db.
+
+python manage.py migrate
+
+###################################################################
+#################       RUN SERVER       ##########################
+###################################################################
+
+1. (venv): Inicia el servidor.
+
+python manage.py runserver
+
+###################################################################
+###################        NEW APP       ##########################
+###################################################################
+
+1.(venv): Crea la estructura de carpetas y archivos de una nueva app "appname".
+
+python manage.py startapp appname
+
+2.Editar "settings.py" agregar la app nueva.
+
+INSTALLED_APPS -> Agregar la "appname" al final de la lista.
+
+3.Editar "models.py" en la /appname segun las tablas que se necesiten en la app.
+
+4.(venv): Genera el commit de la migracion, detecta cambios.
+
+python manage.py makemigrations appname
+
+5.(venv): Hace la migracion.
+
+python manage.py migrate appname
+
+
+###################################################################
+###################        ADMIN WORK       #######################
+###################################################################
+
+1.Editar "appname/admin.py". Agregar las siguientes lineas por cada tabla necesaria.
+
+from .models import modelName
+
+admin.site.register(modelName)
+
+
+2. Crear super user en la db de el proyecto para entrar en el site del admin.
+
+ python manage.py createsuperuser
+
+3. Agregar en los modelos el siguiente metodo para mostrar en el site del admin.
+
+def __str__(self):
+    return self.campoNombre
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
